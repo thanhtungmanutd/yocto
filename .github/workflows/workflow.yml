@@ -25,6 +25,7 @@ jobs:
             xz-utils zstd
 
       - name: active environment
+        run: |
           cd poky
           source ./oe-init-build-env
           ls 
