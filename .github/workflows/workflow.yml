@@ -12,28 +12,23 @@ jobs:
         run: |
           echo "=== Build Image ==="
 
-          # Clone poky and meta-raspberrypi (kirkstone branch)
-          git clone -b kirkstone https://github.com/yoctoproject/poky.git
           git clone -b kirkstone https://github.com/agherzan/meta-raspberrypi.git
+          git clone -b kirkstone https://github.com/yoctoproject/poky.git
 
-          # Install required host packages
           sudo apt-get update
           sudo apt-get install -y \
             build-essential chrpath cpio debianutils diffstat file gawk gcc git \
             iputils-ping libacl1 liblz4-tool locales python3 python3-git python3-jinja2 \
             python3-pexpect python3-pip python3-subunit socat texinfo unzip wget \
             xz-utils zstd
-
-          # Initialize Yocto build environment
+            
           cd poky
-          source oe-init-build-env
+          source ./oe-init-build-env
 
-          # Add meta-raspberrypi layer
+          ls 
           bitbake-layers add-layer ../../meta-raspberrypi
-
-          # Configure build for Raspberry Pi 4
+          
           sed -i '/MACHINE ??= "qemux86-64"/s/^/#/' conf/local.conf
           echo 'MACHINE ?= "raspberrypi4"' >> conf/local.conf
 
-          # Build minimal image
           bitbake core-image-minimal
