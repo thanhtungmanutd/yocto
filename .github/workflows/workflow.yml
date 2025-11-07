@@ -1,6 +1,6 @@
 name: Build
 
-on:   
+on:
   push:
     branches: [ "master" ]
 
@@ -10,13 +10,13 @@ jobs:
     steps:
       - name: clone resource
         run: |
-          echo "=== Build Image ==="
-
+          echo "=== Clone Yocto Layers ==="
           git clone -b kirkstone https://github.com/agherzan/meta-raspberrypi.git
           git clone -b kirkstone https://github.com/yoctoproject/poky.git
 
       - name: install tools and package
         run: |
+          echo "=== Install Dependencies ==="
           sudo apt-get update
           sudo apt-get install -y \
             build-essential chrpath cpio debianutils diffstat file gawk gcc git \
@@ -26,12 +26,14 @@ jobs:
 
       - name: active environment
         run: |
+          echo "=== Setup Yocto Build Environment ==="
           cd poky
           source ./oe-init-build-env
-          ls 
-          bitbake-layers add-layer ../../meta-raspberrypi
-          
-          # sed -i '/MACHINE ??= "qemux86-64"/s/^/#/' conf/local.conf
-          # echo 'MACHINE ?= "raspberrypi4"' >> conf/local.conf
+          echo ${pwd}
 
-          # bitbake core-image-minimal
+        # bitbake-layers add-layer ../../meta-raspberrypi
+        
+        # sed -i '/MACHINE ??= "qemux86-64"/s/^/#/' conf/local.conf
+        # echo 'MACHINE ?= "raspberrypi4"' >> conf/local.conf
+
+        # bitbake core-image-minimal
