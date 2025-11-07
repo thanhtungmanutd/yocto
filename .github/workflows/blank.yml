@@ -1,0 +1,20 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test GH action
+        run: |
+          echo "Testing"
+          git clone -b kirkstone https://github.com/yoctoproject/poky.git
+          git clone -b kirkstone https://github.com/agherzan/meta-raspberrypi.git
+          cd poky
+          source ./oe-init-build-env 
+          bitbake core-image-minimal
