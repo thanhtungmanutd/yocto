@@ -17,4 +17,7 @@ jobs:
           git clone -b kirkstone https://github.com/agherzan/meta-raspberrypi.git
           cd poky
           source ./oe-init-build-env 
+          bitbake-layers add-layer ../meta-raspberrypi
+          sed -i '/MACHINE ??= "qemux86-64"/s/^/#/' build/conf/local.conf
+          echo "MACHINE ?= ""raspberrypi4"" > /build/conf/local.conf
           bitbake core-image-minimal
