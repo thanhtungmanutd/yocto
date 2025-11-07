@@ -29,9 +29,7 @@ jobs:
           echo "=== Setup Yocto Build Environment ==="
           cd poky
           source ./oe-init-build-env
-          echo ${pwd}
-
-        # bitbake-layers add-layer ../../meta-raspberrypi
+          bitbake-layers add-layer ../../meta-raspberrypi
         
         # sed -i '/MACHINE ??= "qemux86-64"/s/^/#/' conf/local.conf
         # echo 'MACHINE ?= "raspberrypi4"' >> conf/local.conf
